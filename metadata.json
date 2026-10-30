@@ -1,0 +1,6 @@
+{
+  "name": "MediaVault",
+  "description": "Personal media library to save and organize songs, YouTube videos, playlists, audio, PDFs, photos, and notes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

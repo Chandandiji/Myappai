@@ -1,0 +1,153 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile document isolated per user",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The Firebase Auth UID of the user"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The user's display name"
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user profile was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user profile was last updated"
+        }
+      },
+      "required": ["userId", "createdAt"]
+    },
+    "MediaItem": {
+      "title": "MediaItem",
+      "description": "A media library item representing songs, YouTube videos, other videos, audio, PDFs, photos, and notes",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title or headline of the media item"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["song", "youtube", "video", "audio", "pdf", "photo", "note"],
+          "description": "Media type discriminator"
+        },
+        "url": {
+          "type": "string",
+          "description": "Link URL or local file content URI"
+        },
+        "content": {
+          "type": "string",
+          "description": "Note text body, transcript, or markdown"
+        },
+        "artistOrAuthor": {
+          "type": "string",
+          "description": "Artist, channel name, or author"
+        },
+        "category": {
+          "type": "string",
+          "description": "Broad category grouping (Music, Video, Document, etc.)"
+        },
+        "tags": {
+          "type": "array",
+          "description": "User assigned tags"
+        },
+        "isFavorite": {
+          "type": "boolean",
+          "description": "Whether item is marked as favorite"
+        },
+        "playlistIds": {
+          "type": "array",
+          "description": "List of playlist IDs this item belongs to"
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "description": "Preview or cover image URL"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when item was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when item was last modified"
+        }
+      },
+      "required": ["userId", "title", "type", "createdAt"]
+    },
+    "Playlist": {
+      "title": "Playlist",
+      "description": "A curated collection or playlist of media items",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the playlist"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the playlist"
+        },
+        "itemCount": {
+          "type": "integer",
+          "description": "Number of items in the playlist"
+        },
+        "coverUrl": {
+          "type": "string",
+          "description": "Cover image URL"
+        },
+        "color": {
+          "type": "string",
+          "description": "Card accent color hex or theme token"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when playlist was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when playlist was last modified"
+        }
+      },
+      "required": ["userId", "name", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Individual user document containing metadata"
+    },
+    "/users/{userId}/media_items/{itemId}": {
+      "schema": "MediaItem",
+      "description": "Collection of media items owned by the user"
+    },
+    "/users/{userId}/playlists/{playlistId}": {
+      "schema": "Playlist",
+      "description": "Collection of playlists created by the user"
+    }
+  }
+}
